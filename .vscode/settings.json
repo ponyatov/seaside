@@ -1,0 +1,45 @@
+/* \ <section:top> */
+{
+/* / <section:top> */
+/* \ <section:mid> */
+/* \ <section:multi> */
+"multiCommand.commands": [
+    {
+        "command": "multiCommand.f11",
+        "sequence": [
+            "workbench.action.files.saveAll",
+            {"command": "workbench.action.tasks.runTask",
+                "args": "make: web"}
+            // {"command": "workbench.action.terminal.sendSequence",
+            //     "args": {"text": "\u000D clear ; make web \u000D"}}
+        ]
+    },
+    {
+        "command": "multiCommand.f12",
+        "sequence": [
+            "workbench.action.files.saveAll",
+            {"command": "workbench.action.tasks.runTask",
+                "args": "make: pep"}
+            // {"command": "workbench.action.terminal.sendSequence",
+            //     "args": {"text": "\u000D clear ; make doxy \u000D"}}
+        ]
+    },
+],
+/* / <section:multi> */
+"files.watcherExclude": {
+},
+"files.exclude": {
+},
+"files.associations": {
+    /* \ <section:assoc> */
+    "requirements.*": "config",
+    /* / <section:assoc> */
+},
+"editor.tabSize": 4,
+"editor.rulers": [80],
+"workbench.tree.indent": 32,
+"browser-preview.startUrl": "127.0.0.1:12345/"
+/* / <section:mid> */
+/* \ <section:bot> */
+}
+/* / <section:bot> */
