@@ -1,2 +1,5 @@
 *~
 *.swp
+
+/pharo
+/lib/pharo/

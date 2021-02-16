@@ -92,7 +92,9 @@ static/js/respond.js:
 
 PHARO_VER = 80
 .PHONY: pharo
-pharo: tmp/pharo64-linux-stable.zip
+pharo: bin/pharo
+bin/pharo: tmp/pharo64-linux-stable.zip
+	unzip -x $< && touch $@A
 tmp/pharo64-linux-stable.zip:
 	$(WGET) -O $@ https://files.pharo.org/get-files/$(PHARO_VER)/pharo64-linux-stable.zip
 # / <section:install/pharo>
