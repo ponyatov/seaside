@@ -15,12 +15,14 @@ TMP          = $(CWD)/tmp
 # \ <section:tool>
 WGET         = wget -c
 CURL         = curl
+PHARO        = ./pharo
 # / <section:tool>
 # \ <section:src>
 # / <section:src>
 # \ <section:all>
 .PHONY: all
-all: $(PY) $(MODULE).py
+all: pharo
+	$(PHARO) $(IMAGE)
 
 .PHONY: web
 web: $(PY) $(MODULE).py
@@ -92,11 +94,15 @@ static/js/respond.js:
 
 PHARO_VER = 80
 .PHONY: pharo
-pharo: bin/pharo
+pharo: bin/pharo lib/pharo.version
+lib/pharo.version: tmp/pharo64.zip
+	unzip -d lib -x $< && touch $@
 bin/pharo: tmp/pharo64-linux-stable.zip
-	unzip -x $< && touch $@A
+	unzip -x $< && touch $@
 tmp/pharo64-linux-stable.zip:
 	$(WGET) -O $@ https://files.pharo.org/get-files/$(PHARO_VER)/pharo64-linux-stable.zip
+tmp/pharo64.zip:	
+	$(WGET) -O $@ https://files.pharo.org/get-files/$(PHARO_VER)/pharo64.zip	
 # / <section:install/pharo>
 # / <section:install>
 # \ <section:merge>
