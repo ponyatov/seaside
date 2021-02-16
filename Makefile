@@ -16,6 +16,7 @@ TMP          = $(CWD)/tmp
 WGET         = wget -c
 CURL         = curl
 PHARO        = ./pharo
+IMAGE        = $(shell find lib -regex ".+.image$$")
 # / <section:tool>
 # \ <section:src>
 # / <section:src>
