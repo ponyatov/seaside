@@ -42,6 +42,7 @@ doxy:
 # \ <section:install>
 .PHONY: install
 install: $(OS)_install
+	$(MAKE) pharo
 .PHONY: update
 update: $(OS)_update
 .PHONY: Linux_install Linux_update
