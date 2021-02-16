@@ -19,7 +19,7 @@
         "sequence": [
             "workbench.action.files.saveAll",
             {"command": "workbench.action.tasks.runTask",
-                "args": "make: pep"}
+                "args": "module: pharo"}
             // {"command": "workbench.action.terminal.sendSequence",
             //     "args": {"text": "\u000D clear ; make doxy \u000D"}}
         ]

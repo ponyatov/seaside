@@ -15,18 +15,8 @@ TMP          = $(CWD)/tmp
 # \ <section:tool>
 WGET         = wget -c
 CURL         = curl
-PY           = $(BIN)/python3
-PIP          = $(BIN)/pip3
-PEP          = $(BIN)/autopep8
-PYT          = $(BIN)/pytest
 # / <section:tool>
 # \ <section:src>
-M += $(MODULE).py
-M += $(shell find metaL -type f -regex ".+.py$$")
-T += $(shell find test  -type f -regex ".+.py$$")
-P += config.py
-N += nginx.conf
-S += $(M) $(T) $(N)
 # / <section:src>
 # \ <section:all>
 .PHONY: all
@@ -40,20 +30,6 @@ web: $(PY) $(MODULE).py
 test: $(PYT) $(T)
 	$< test
 
-.PHONY: pep
-pep: $(PEP)
-$(PEP): $(M) $(T)
-	$(MAKE) test
-	$(PEP) --ignore=E26,E302,E401,E402 --in-place $?
-	$(MAKE) test
-	$(MAKE) doxy
-	touch $@
-
-.PHONY: repl
-repl: $(PY) $(M) $(T)
-	$(MAKE) pep
-	$(PY) -i $(MODULE).py $@
-	$(MAKE) $@
 # / <section:all>
 # \ <section:doc>
 .PHONY: doxy
@@ -63,13 +39,8 @@ doxy:
 # \ <section:install>
 .PHONY: install
 install: $(OS)_install
-	$(MAKE) $(PIP)
-	$(MAKE) update
-	$(MAKE) js
 .PHONY: update
 update: $(OS)_update
-	$(PIP)  install -U pip autopep8
-	$(PIP)  install -U -r requirements.txt
 .PHONY: Linux_install Linux_update
 Linux_install Linux_update:
 	sudo apt update
@@ -117,33 +88,28 @@ static/js/respond.js:
 	$(WGET) -O $@ $(RESPOND_CDN)/$(RESPOND_VER)/respond.js
 
 # / <section:install/js>
-# \ <section:install/py>
-$(PY) $(PIP):
-	python3 -m venv .
-	$(MAKE) update
-$(PYT):
-	$(PIP) install pytest
-# / <section:install/py>
+# \ <section:install/pharo>
+
+PHARO_VER = 80
+.PHONY: pharo
+pharo: tmp/pharo64-linux-stable.zip
+tmp/pharo64-linux-stable.zip:
+	$(WGET) -O $@ https://files.pharo.org/get-files/$(PHARO_VER)/pharo64-linux-stable.zip
+# / <section:install/pharo>
 # / <section:install>
 # \ <section:merge>
-MERGE  = Makefile README.md .vscode $(S)
-MERGE += apt.txt apt.dev requirements.txt
-MERGE += static templates
-MERGE += geo/data
-MERGE += doc doxy.gen
+MERGE  = Makefile README.md .vscode $(S) apt.txt
 .PHONY: main
 main:
 	git push -v
 	git checkout $@
 	git pull -v
 	git checkout shadow -- $(MERGE)
-	$(MAKE) doxy
 .PHONY: shadow
 shadow:
 	git push -v
 	git checkout $@
 	git pull -v
-	$(MAKE) doxy
 .PHONY: release
 release:
 	git tag $(NOW)-$(REL)

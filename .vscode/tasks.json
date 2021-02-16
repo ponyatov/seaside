@@ -9,6 +9,12 @@
             "problemMatcher": []
         },
         {
+            "label":          "module: pharo",
+            "type":           "shell",
+            "command":        "make pharo",
+            "problemMatcher": []
+        },
+        {
             "label":          "module: update",
             "type":           "shell",
             "command":        "make update",
